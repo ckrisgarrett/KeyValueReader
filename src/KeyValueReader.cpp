@@ -87,7 +87,7 @@ extern "C" {
 /*
     KVR_readFile
 */
-enum KVR_Status KVR_readFile(
+int KVR_readFile(
     void *kvrVoid, 
     const char *filename)
 {
@@ -156,12 +156,22 @@ enum KVR_Status KVR_readFile(
 
     return KVR_Success;
 }
+void kvri_readfile_(
+    uint64_t *kvr, 
+    char *filename_f,
+    int *length,
+    int *status)
+{
+    void *kvrVoid = (void*)(*kvr);
+    string filename = KVR_UTILS::convertFortranString(filename_f, *length);
+    *status = KVR_readFile(kvrVoid, filename.c_str());
+}
 
 
 /*
     KVR_create
 */
-enum KVR_Status KVR_create(
+int KVR_create(
     void **kvrVoid)
 {
     // Allocate kvr data
@@ -183,18 +193,34 @@ enum KVR_Status KVR_create(
     *kvrVoid = kvr;
     return KVR_Success;
 }
+void kvr_create_(
+    uint64_t *kvr, 
+    int *status)
+{
+    void *kvrVoid;
+    *status = KVR_create(&kvrVoid);
+    *kvr = (uint64_t)kvrVoid;
+}
 
 
 /*
     KVR_delete
 */
-enum KVR_Status KVR_delete(
+int KVR_delete(
     void **kvrVoid)
 {
     KVR_Data *kvr = static_cast<KVR_Data*>(*kvrVoid);
     delete kvr;
     kvrVoid = NULL;
     return KVR_Success;
+}
+void kvr_delete_(
+    uint64_t *kvr, 
+    int *status)
+{
+    void *kvrVoid = (void*)(*kvr);
+    *status = KVR_delete(&kvrVoid);
+    *kvr = (uint64_t)kvrVoid;
 }
 
 
@@ -203,7 +229,7 @@ enum KVR_Status KVR_delete(
     
     If an error occurs, value is set to "".
 */
-enum KVR_Status KVR_getString(
+int KVR_getString(
     const void *kvrVoid, 
     const char *key, 
     char *value)
@@ -224,6 +250,19 @@ enum KVR_Status KVR_getString(
 
     return KVR_Success;
 }
+void kvri_getstring_(
+    uint64_t *kvr, 
+    char *key_f,
+    int *key_len,
+    char *value,
+    int *value_len,
+    int *status)
+{
+    void *kvrVoid = (void*)(*kvr);
+    string key = KVR_UTILS::convertFortranString(key_f, *key_len);
+    *status = KVR_getString(kvrVoid, key.c_str(), value);
+    KVR_UTILS::padFortranString(value, *value_len);
+}
 
 
 /*
@@ -231,7 +270,7 @@ enum KVR_Status KVR_getString(
     
     If an error occurs, value is set to zero.
 */
-enum KVR_Status KVR_getInt(
+int KVR_getInt(
     const void *kvrVoid, 
     const char *key, 
     int *value)
@@ -259,6 +298,17 @@ enum KVR_Status KVR_getInt(
 
     return KVR_Success;
 }
+void kvri_getint_(
+    uint64_t *kvr, 
+    char *key_f,
+    int *key_len,
+    int *value,
+    int *status)
+{
+    void *kvrVoid = (void*)(*kvr);
+    string key = KVR_UTILS::convertFortranString(key_f, *key_len);
+    *status = KVR_getInt(kvrVoid, key.c_str(), value);
+}
 
 
 /*
@@ -266,7 +316,7 @@ enum KVR_Status KVR_getInt(
     
     If an error occurs, value is set to zero.
 */
-enum KVR_Status KVR_getDouble(
+int KVR_getDouble(
     const void *kvrVoid, 
     const char *key, 
     double *value)
@@ -294,6 +344,17 @@ enum KVR_Status KVR_getDouble(
 
     return KVR_Success;
 }
+void kvri_getdouble_(
+    uint64_t *kvr, 
+    char *key_f,
+    int *key_len,
+    double *value,
+    int *status)
+{
+    void *kvrVoid = (void*)(*kvr);
+    string key = KVR_UTILS::convertFortranString(key_f, *key_len);
+    *status = KVR_getDouble(kvrVoid, key.c_str(), value);
+}
 
 
 /*
@@ -301,7 +362,7 @@ enum KVR_Status KVR_getDouble(
     
     If an error occurs, value is set to zero.
 */
-enum KVR_Status KVR_getFloat(
+int KVR_getFloat(
     const void *kvrVoid, 
     const char *key, 
     float *value)
@@ -329,6 +390,17 @@ enum KVR_Status KVR_getFloat(
 
     return KVR_Success;
 }
+void kvri_getfloat_(
+    uint64_t *kvr, 
+    char *key_f,
+    int *key_len,
+    float *value,
+    int *status)
+{
+    void *kvrVoid = (void*)(*kvr);
+    string key = KVR_UTILS::convertFortranString(key_f, *key_len);
+    *status = KVR_getFloat(kvrVoid, key.c_str(), value);
+}
 
 
 /*
@@ -336,7 +408,7 @@ enum KVR_Status KVR_getFloat(
     
     If an error occurs, value is set to false.
 */
-enum KVR_Status KVR_getBool(
+int KVR_getBool(
     const void *kvrVoid, 
     const char *key, 
     int *value)
@@ -369,12 +441,23 @@ enum KVR_Status KVR_getBool(
         kvr->c_filename, "Error converting value to bool");
     return KVR_ConversionError;
 }
+void kvri_getbool_(
+    uint64_t *kvr, 
+    char *key_f,
+    int *key_len,
+    int *value,
+    int *status)
+{
+    void *kvrVoid = (void*)(*kvr);
+    string key = KVR_UTILS::convertFortranString(key_f, *key_len);
+    *status = KVR_getBool(kvrVoid, key.c_str(), value);
+}
 
 
 /*
     print
 */
-enum KVR_Status KVR_print(
+int KVR_print(
     const void *kvrVoid)
 {
     const KVR_Data *kvr = static_cast<const KVR_Data*>(kvrVoid);
@@ -395,12 +478,19 @@ enum KVR_Status KVR_print(
     
     return KVR_Success;
 }
+void kvr_print_(
+    uint64_t *kvr, 
+    int *status)
+{
+    void *kvrVoid = (void*)(*kvr);
+    *status = KVR_print(kvrVoid);
+}
 
 
 /*
     KVR_getMaxValueLength
 */
-enum KVR_Status KVR_getMaxValueLength(
+int KVR_getMaxValueLength(
     const void *kvrVoid,
     int *length)
 {

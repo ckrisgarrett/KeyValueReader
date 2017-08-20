@@ -215,4 +215,43 @@ int findKey(
     return KEY_NOT_FOUND;
 }
 
+
+/*
+    convertFortranString
+
+    Returns a c++ string.
+    Fortran does not end a string with 0.
+*/
+std::string convertFortranString(
+    char *s_f, 
+    int len)
+{
+    string s;
+    s.insert(0, s_f, len);
+    return s;
+}
+
+
+/*
+    padFortranString
+
+    Pad Fortran string with spaces.
+    Fortran does not end a string with 0.
+*/
+void padFortranString(
+    char *s, 
+    int len)
+{
+    bool hitNullTerminator = false;
+    for (int i = 0; i < len; i++) {
+        if (hitNullTerminator) {
+            s[i] = ' ';
+        }
+        else if (s[i] == 0) {
+            hitNullTerminator = true;
+            s[i] = ' ';
+        }
+    }
+}
+
 } // End KVR_UTILS namespace

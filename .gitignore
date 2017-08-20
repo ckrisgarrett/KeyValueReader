@@ -3,4 +3,5 @@
 *.swp
 .DS_Store
 *.a
+*.mod
 lib/

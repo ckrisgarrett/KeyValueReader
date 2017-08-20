@@ -31,7 +31,7 @@ bool trySuccess(
     void *kvr, 
     const std::string &filename)
 {
-    KVR_Status error = KVR_readFile(kvr, filename.c_str());
+    int error = KVR_readFile(kvr, filename.c_str());
     if (error == KVR_Success)
         return true;
     return false;
@@ -40,9 +40,9 @@ bool trySuccess(
 bool tryFailure(
     void *kvr, 
     const std::string &filename, 
-    const KVR_Status error)
+    const int error)
 {
-    KVR_Status error1 = KVR_readFile(kvr, filename.c_str());
+    int error1 = KVR_readFile(kvr, filename.c_str());
     if (error != error1)
         return false;
     return true;
@@ -59,7 +59,7 @@ bool tryKeyValueSuccessString(
     const std::string &value)
 {
     char valueChars[100];
-    KVR_Status error = KVR_getString(kvr, key.c_str(), valueChars);
+    int error = KVR_getString(kvr, key.c_str(), valueChars);
     std::string value1(valueChars);
 
     if (error != KVR_Success)
@@ -75,7 +75,7 @@ bool tryKeyValueSuccessInt(
     const int value)
 {
     int value1;
-    KVR_Status error = KVR_getInt(kvr, key.c_str(), &value1);
+    int error = KVR_getInt(kvr, key.c_str(), &value1);
 
     if (error != KVR_Success)
         return false;
@@ -90,7 +90,7 @@ bool tryKeyValueSuccessDouble(
     const double value)
 {
     double value1;
-    KVR_Status error = KVR_getDouble(kvr, key.c_str(), &value1);
+    int error = KVR_getDouble(kvr, key.c_str(), &value1);
 
     if (error != KVR_Success)
         return false;
@@ -105,7 +105,7 @@ bool tryKeyValueSuccessFloat(
     const float value)
 {
     float value1;
-    KVR_Status error = KVR_getFloat(kvr, key.c_str(), &value1);
+    int error = KVR_getFloat(kvr, key.c_str(), &value1);
 
     if (error != KVR_Success)
         return false;
@@ -120,7 +120,7 @@ bool tryKeyValueSuccessBool(
     const int value)
 {
     int value1;
-    KVR_Status error = KVR_getBool(kvr, key.c_str(), &value1);
+    int error = KVR_getBool(kvr, key.c_str(), &value1);
 
     if (error != KVR_Success)
         return false;
@@ -133,10 +133,10 @@ bool tryKeyValueSuccessBool(
 bool tryKeyValueFailureString(
     const void *kvr, 
     const std::string &key,
-    const KVR_Status error)
+    const int error)
 {
     char valueChars[100];
-    KVR_Status error1 = KVR_getString(kvr, key.c_str(), valueChars);
+    int error1 = KVR_getString(kvr, key.c_str(), valueChars);
     std::string value1(valueChars);
 
     if (error != error1)
@@ -148,10 +148,10 @@ bool tryKeyValueFailureString(
 bool tryKeyValueFailureInt(
     const void *kvr, 
     const std::string &key,
-    const KVR_Status error)
+    const int error)
 {
     int value1;
-    KVR_Status error1 = KVR_getInt(kvr, key.c_str(), &value1);
+    int error1 = KVR_getInt(kvr, key.c_str(), &value1);
 
     if (error != error1)
         return false;
@@ -162,10 +162,10 @@ bool tryKeyValueFailureInt(
 bool tryKeyValueFailureDouble(
     const void *kvr, 
     const std::string &key,
-    const KVR_Status error)
+    const int error)
 {
     double value1;
-    KVR_Status error1 = KVR_getDouble(kvr, key.c_str(), &value1);
+    int error1 = KVR_getDouble(kvr, key.c_str(), &value1);
 
     if (error != error1)
         return false;
@@ -176,10 +176,10 @@ bool tryKeyValueFailureDouble(
 bool tryKeyValueFailureFloat(
     const void *kvr, 
     const std::string &key,
-    const KVR_Status error)
+    const int error)
 {
     float value1;
-    KVR_Status error1 = KVR_getFloat(kvr, key.c_str(), &value1);
+    int error1 = KVR_getFloat(kvr, key.c_str(), &value1);
 
     if (error != error1)
         return false;
@@ -190,10 +190,10 @@ bool tryKeyValueFailureFloat(
 bool tryKeyValueFailureBool(
     const void *kvr, 
     const std::string &key,
-    const KVR_Status error)
+    const int error)
 {
     int value1;
-    KVR_Status error1 = KVR_getBool(kvr, key.c_str(), &value1);
+    int error1 = KVR_getBool(kvr, key.c_str(), &value1);
 
     if (error != error1)
         return false;
@@ -209,7 +209,7 @@ bool tryMaxValueLengthSuccess(
     const int length)
 {
     int length1;
-    KVR_Status error = KVR_getMaxValueLength(kvr, &length1);
+    int error = KVR_getMaxValueLength(kvr, &length1);
 
     if (error != KVR_Success)
         return false;
@@ -220,10 +220,10 @@ bool tryMaxValueLengthSuccess(
 
 bool tryMaxValueLengthFailure(
     const void *kvr,
-    const KVR_Status error)
+    const int error)
 {
     int length1;
-    KVR_Status error1 = KVR_getMaxValueLength(kvr, &length1);
+    int error1 = KVR_getMaxValueLength(kvr, &length1);
 
     if (error != error1)
         return false;

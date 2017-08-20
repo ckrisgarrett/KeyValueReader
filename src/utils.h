@@ -49,6 +49,14 @@ bool parseLine(
     std::string &outKey, 
     std::string &outValue);
 
+std::string convertFortranString(
+    char *s_f,
+    int len);
+
+void padFortranString(
+    char *s,
+    int len);
+
 } // End namespace
 
 #endif

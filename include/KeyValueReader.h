@@ -44,15 +44,15 @@ enum KVR_Status {
 /*
     Create/delete KeyValueReader strucuture.
 */
-enum KVR_Status KVR_create(
+int KVR_create(
     void **kvr);
-enum KVR_Status KVR_delete(
+int KVR_delete(
     void **kvr);
 
 /*
     Parse key/value file and store the data.
 */
-enum KVR_Status KVR_readFile(
+int KVR_readFile(
     void *kvr, 
     const char *filename);
 
@@ -61,30 +61,30 @@ enum KVR_Status KVR_readFile(
     Useful before using KVR_getString to know how large to 
     make value char array.
 */
-enum KVR_Status KVR_getMaxValueLength(
+int KVR_getMaxValueLength(
     const void *kvr,
     int *length);
 
 /*
     Get value from key.
 */
-enum KVR_Status KVR_getString(
+int KVR_getString(
     const void *kvr, 
     const char *key, 
     char *value);
-enum KVR_Status KVR_getInt(
+int KVR_getInt(
     const void *kvr, 
     const char *key, 
     int *value);
-enum KVR_Status KVR_getDouble(
+int KVR_getDouble(
     const void *kvr, 
     const char *key, 
     double *value);
-enum KVR_Status KVR_getFloat(
+int KVR_getFloat(
     const void *kvr, 
     const char *key, 
     float *value);
-enum KVR_Status KVR_getBool(
+int KVR_getBool(
     const void *kvr, 
     const char *key, 
     int *value);
@@ -92,7 +92,7 @@ enum KVR_Status KVR_getBool(
 /*
     Print the contents of all keys/values.
 */
-enum KVR_Status KVR_print(
+int KVR_print(
     const void *kvr); 
 
 #ifdef __cplusplus

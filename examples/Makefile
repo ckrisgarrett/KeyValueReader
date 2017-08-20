@@ -4,5 +4,6 @@
 
 .PHONY: build
 build:
-	gcc -Wall main.c ../lib/libKeyValueReader.a -lstdc++ -o example.x
+	gcc -Wall main.c ../lib/libKeyValueReader.a -lstdc++ -o ex_c.x
+	gfortran -Wall ../include/KeyValueReader.f90 main.f90 ../lib/libKeyValueReader.a -lstdc++ -o ex_f90.x
 
